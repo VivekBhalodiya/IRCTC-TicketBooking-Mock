@@ -1,0 +1,9 @@
+<resources>
+  <string name="app_name">RailTicket</string>
+  <string name="email_address_hint">Email Address</string>
+  <string name="password_hint">Password</string>
+  <string name="log_in_button">Log in</string>
+  <string name="create_an_account">Create an account.</string>
+  <string name="admin_login">Admin Login</string>
+  <string name="ticket_checker_text">Ticket Checker</string>
+</resources>

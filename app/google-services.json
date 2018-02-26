@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "271130902945",
+    "firebase_url": "https://railticket-4e77b.firebaseio.com",
+    "project_id": "railticket-4e77b",
+    "storage_bucket": "railticket-4e77b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:271130902945:android:1133c8832f2022cc",
+        "android_client_info": {
+          "package_name": "com.example.vivekbhalodiya.railticket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "271130902945-51176hm4u4thujvk4apj8snr653lpu1p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vivekbhalodiya.railticket",
+            "certificate_hash": "8a23f009a34c4a67fed90f0ff4b998520674e019"
+          }
+        },
+        {
+          "client_id": "271130902945-1lhiamcgielbspdg8sdsvhodg2ku6quf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5P1dL7dsQYf7LQezZ3yiCXJfqetzjAO8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "271130902945-1lhiamcgielbspdg8sdsvhodg2ku6quf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

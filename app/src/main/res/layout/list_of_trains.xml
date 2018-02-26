@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+<FrameLayout
+    tools:context=".feature.trainresult.TrainResultActivity"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+  <android.support.v7.widget.CardView
+      android:layout_marginBottom="5dp"
+      android:shadowDy="10"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tain_name"
+        android:hint="Train Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_gravity="right"
+        android:id="@+id/tain_number"
+        android:hint="Train Number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/departure_time"
+        android:layout_marginTop="50dp"
+        android:hint="Depart Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/origin_name"
+        android:layout_marginTop="70dp"
+        android:hint="Depart Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/duration"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal"
+        android:hint="Depart Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/arrival_time"
+        android:layout_gravity="right"
+        android:layout_marginTop="50dp"
+        android:hint="Arrival Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/destination_name"
+        android:layout_gravity="right"
+        android:layout_marginTop="70dp"
+        android:hint="Depart Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/claassess_recyclerview"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+    </LinearLayout>
+
+
+  </android.support.v7.widget.CardView>
+
+</FrameLayout>
+</layout>
