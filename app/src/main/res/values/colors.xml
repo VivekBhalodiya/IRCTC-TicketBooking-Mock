@@ -7,8 +7,10 @@
 
   <color name="white">#FFF</color>
   <color name="secondary_text">#757575</color>
-  <color name="red">#ff364f</color>
+  <color name="pinkish_red">#ff364f</color>
   <color name="black">#000</color>
   <color name="gradient2">#1976D2</color>
   <color name="success_green">#009688</color>
+  <color name="light_orange">#FFA500</color>
+  <color name="red">#ff0000</color>
 </resources>

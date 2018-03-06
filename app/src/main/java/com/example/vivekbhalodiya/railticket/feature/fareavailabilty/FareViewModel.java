@@ -3,17 +3,17 @@ package com.example.vivekbhalodiya.railticket.feature.fareavailabilty;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
 import com.example.vivekbhalodiya.railticket.api.model.FareAndAvailabilityModel;
 import com.example.vivekbhalodiya.railticket.api.model.TrainAvailability.AvailabilityItem;
 import com.example.vivekbhalodiya.railticket.api.model.TrainAvailability.TrainAvailResponse;
+import com.example.vivekbhalodiya.railticket.api.model.TrainBetween.TrainsItem;
 import com.example.vivekbhalodiya.railticket.api.model.TrainFare.TrainFareResponse;
 import com.example.vivekbhalodiya.railticket.api.services.TrainApi;
 import com.example.vivekbhalodiya.railticket.api.services.TrainApiInterface;
 import com.example.vivekbhalodiya.railticket.constants.AppConstant;
 import com.example.vivekbhalodiya.railticket.feature.base.BaseViewModel;
-import com.yarolegovich.lovelydialog.LovelyInfoDialog;
+import com.example.vivekbhalodiya.railticket.feature.trainsearch.TrainSearchView;
+import com.example.vivekbhalodiya.railticket.feature.trainsearch.TrainSearchViewModel;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
@@ -29,19 +29,30 @@ import timber.log.Timber;
 public class FareViewModel extends BaseViewModel<FareView> {
   private TrainApiInterface trainApiInterface = new TrainApi().getClient().create(TrainApiInterface.class);
   private ProgressDialog progressDialog;
+  private String trainNum;
+  private String fromCode;
+  private String toCode;
+  private TrainsItem trainsItem;
+  private String pref;
   private Context context;
   private RecyclerView recyclerView;
   private AvailabilityAdapter availabilityAdapter;
+  private ClassessAdapter classessAdapter;
 
-  public void OnClickTrainResult(String trainNum, String fromCode, String toCode, String pref, Context context,
-      AvailabilityAdapter availabilityAdapter) {
+  public void OnClickTrainResult(TrainsItem trainsItem, String pref, Context context, AvailabilityAdapter adapter,
+      ClassessAdapter classessAdapter) {
+    this.trainNum = trainsItem.getNumber();
+    this.fromCode = trainsItem.getFromStation().getCode();
+    this.toCode = trainsItem.getToStation().getCode();
+    this.trainsItem = trainsItem;
+    this.pref = pref;
     this.context = context;
-    this.availabilityAdapter=availabilityAdapter;
-
+    this.availabilityAdapter = adapter;
+    this.classessAdapter = classessAdapter;
     Observable<Response<TrainFareResponse>> call = trainApiInterface.getTrainFareWithAvailability(trainNum, fromCode.toLowerCase(), toCode, pref
-        , "GN", "27-02-2018", AppConstant.API_KEY);
+        , TrainSearchViewModel.quota, TrainSearchViewModel.journeyDate, AppConstant.API_KEY);
     Observable<Response<TrainAvailResponse>> availCall =
-        trainApiInterface.getAvailability(trainNum, fromCode, toCode, "27-02-2018", pref, "GN", AppConstant.API_KEY);
+        trainApiInterface.getAvailability(trainNum, fromCode, toCode, TrainSearchViewModel.journeyDate, pref, TrainSearchViewModel.quota, AppConstant.API_KEY);
     progressDialog = new ProgressDialog(context);
     progressDialog.setMessage("Loading..");
     progressDialog.show();
@@ -73,11 +84,14 @@ public class FareViewModel extends BaseViewModel<FareView> {
           }
         });
   }
-  void showProgress(boolean show){
+
+  void showProgress(boolean show) {
     progressDialog.show();
   }
 
   void setAdapterData(int fare, List<AvailabilityItem> availability) {
-    //availabilityAdapter.setData(availability);
+    Timber.i("Fare Model %s",fare);
+    availabilityAdapter.setData(availability,trainsItem,pref);
+    classessAdapter.setData(fare);
   }
 }

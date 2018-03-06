@@ -5,4 +5,5 @@ package com.example.vivekbhalodiya.railticket.feature.base;
  */
 
 public interface MvvmView {
+
 }

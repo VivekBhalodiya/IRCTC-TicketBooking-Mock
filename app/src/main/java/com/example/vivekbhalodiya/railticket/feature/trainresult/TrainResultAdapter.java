@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.example.vivekbhalodiya.railticket.api.model.TrainBetween.TrainsItem;
 import com.example.vivekbhalodiya.railticket.api.model.TrainFare.ClassesItem;
 import com.example.vivekbhalodiya.railticket.databinding.ListOfTrainsBinding;
+import com.example.vivekbhalodiya.railticket.feature.fareavailabilty.AvailabilityAdapter;
 import com.example.vivekbhalodiya.railticket.feature.fareavailabilty.ClassessAdapter;
 import java.util.ArrayList;
 
@@ -20,12 +21,15 @@ public class TrainResultAdapter extends RecyclerView.Adapter<TrainResultAdapter.
   private ArrayList<TrainsItem> listOfTrains;
   private ArrayList<ArrayList<ClassesItem>> avaiableClassessList;
   private TrainResultViewModel viewModel;
+  private TrainResultActivity trainResultActivity;
   private ClassessAdapter classessAdapter;
 
-  TrainResultAdapter(ArrayList<TrainsItem> listOfTrains, ArrayList<ArrayList<ClassesItem>> avaiableClassessList, TrainResultViewModel viewModel) {
+  TrainResultAdapter(ArrayList<TrainsItem> listOfTrains, ArrayList<ArrayList<ClassesItem>> avaiableClassessList, TrainResultViewModel viewModel,
+      TrainResultActivity trainResultActivity) {
     this.listOfTrains = listOfTrains;
     this.avaiableClassessList = avaiableClassessList;
     this.viewModel = viewModel;
+    this.trainResultActivity = trainResultActivity;
     notifyDataSetChanged();
   }
 
@@ -36,6 +40,7 @@ public class TrainResultAdapter extends RecyclerView.Adapter<TrainResultAdapter.
 
   @Override public void onBindViewHolder(ViewHolder holder, final int position) {
     Context context = holder.binding.getRoot().getContext();
+    AvailabilityAdapter availabilityAdapter=new AvailabilityAdapter(context,trainResultActivity);
 
     holder.binding.arrivalTime.setText(listOfTrains.get(position).getDestArrivalTime());
     holder.binding.departureTime.setText(listOfTrains.get(position).getSrcDepartureTime());
@@ -45,14 +50,19 @@ public class TrainResultAdapter extends RecyclerView.Adapter<TrainResultAdapter.
     holder.binding.tainName.setText(listOfTrains.get(position).getName());
     holder.binding.tainNumber.setText(listOfTrains.get(position).getNumber());
 
-    classessAdapter = new ClassessAdapter(avaiableClassessList.get(holder.getAdapterPosition()),
-        listOfTrains.get(holder.getAdapterPosition()).getNumber(),
-        listOfTrains.get(holder.getAdapterPosition()).getFromStation().getCode(),
-        listOfTrains.get(holder.getAdapterPosition()).getToStation().getCode(),
-        context);
-    holder.binding.claassessRecyclerview.setHasFixedSize(true);
+    classessAdapter = new ClassessAdapter(avaiableClassessList.get(holder.getAdapterPosition()),listOfTrains.get(holder.getAdapterPosition()),
+        context,availabilityAdapter);
+
     holder.binding.claassessRecyclerview.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     holder.binding.claassessRecyclerview.setAdapter(classessAdapter);
+
+
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(holder.binding.getRoot().getContext());
+    linearLayoutManager.setOrientation( LinearLayoutManager.HORIZONTAL );
+    holder.binding.fareAvailabilityRecyclerview.setLayoutManager(linearLayoutManager);
+    holder.binding.fareAvailabilityRecyclerview.setHasFixedSize(true);
+    holder.binding.fareAvailabilityRecyclerview.setAdapter(availabilityAdapter);
+
   }
 
   @Override public int getItemCount() {

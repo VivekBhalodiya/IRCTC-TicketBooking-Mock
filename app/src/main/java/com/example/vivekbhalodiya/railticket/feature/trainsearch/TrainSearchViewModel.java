@@ -25,12 +25,12 @@ import timber.log.Timber;
  */
 
 public class TrainSearchViewModel extends BaseViewModel<TrainSearchView> {
-  private static String journeyDate = "27-02-2018";
-  private static String sourceCode = "ndls";
-  private static String destCode = "hwh";
+  public static String journeyDate = "27-03-2018";
+  public static String sourceCode = "ndls";
+  public static String destCode = "hwh";
   private static String trainNumber = "";
-  private static String preferenceCoach = "3A";
-  private static String quota = "GN";
+  public static String preferenceCoach = "3A";
+  public static String quota = "GN";
   private TrainApiInterface trainApi = new TrainApi().getClient().create(TrainApiInterface.class);
   private ArrayList<TrainsItem> listOfTrains = new ArrayList<>();
   private ArrayList<ArrayList<ClassesItem>> listsOfClassess = new ArrayList<>();
@@ -64,7 +64,7 @@ public class TrainSearchViewModel extends BaseViewModel<TrainSearchView> {
         .flatMap(Observable::fromIterable)
         .concatMap(trainNumber -> trainApi.getTrainFareWithAvailability(trainNumber, trainNumber, destCode, preferenceCoach, quota, journeyDate,
             AppConstant.API_KEY)
-            .timeout(10,TimeUnit.SECONDS)
+            .timeout(20,TimeUnit.SECONDS)
             .subscribeOn(Schedulers.io()))
         .subscribeWith(new DisposableObserver<Response<TrainFareResponse>>() {
 

@@ -28,7 +28,7 @@ public class TrainResultActivity extends BaseActivity<ActivityTrainResultBinding
     avaiableClassessList = (ArrayList<ArrayList<ClassesItem>>) getIntent().getBundleExtra("intent").getSerializable("classes");
 
     recyclerView = findViewById(R.id.recycler_view);
-    adapter = new TrainResultAdapter(trainsItemArrayList,avaiableClassessList, viewModel);
+    adapter = new TrainResultAdapter(trainsItemArrayList,avaiableClassessList, viewModel,this);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.setItemAnimator(new DefaultItemAnimator());
     recyclerView.setAdapter(adapter);
