@@ -26,6 +26,7 @@ public class PassengerViewModel extends BaseViewModel<PassengerView> {
   private String srcDeptTime = "";
   private String destArrivalTime = "";
   private String travelTime = "";
+  private String pnr = "";
 
   /*
   private void setTrainData() {
@@ -41,11 +42,11 @@ public class PassengerViewModel extends BaseViewModel<PassengerView> {
   }
   */
 
-  PassengerViewModel(){
+  public PassengerViewModel(){
 
   }
 
-  void setPassengerName(String passengerName) {
+  public void setPassengerName(String passengerName) {
     this.passengerName = passengerName;
   }
 
@@ -183,5 +184,13 @@ public class PassengerViewModel extends BaseViewModel<PassengerView> {
 
   public String getTravelTime() {
     return travelTime;
+  }
+
+  public String getPnr() {
+    return pnr;
+  }
+
+  public void setPnr(String pnr) {
+    this.pnr = pnr;
   }
 }

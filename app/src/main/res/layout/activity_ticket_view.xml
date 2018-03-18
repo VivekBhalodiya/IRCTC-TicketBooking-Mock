@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    tools:context="com.example.vivekbhalodiya.railticket.feature.ticketview.TicketViewActivity">
+
+  <android.support.v7.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="10dp"
+      app:cardCornerRadius="5dp">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+      <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/ticket_from_stn_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ahmedabad Jn - "/>
+        <TextView
+            android:id="@+id/ticket_to_stn_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hyderabad Jn"/>
+
+      </LinearLayout>
+      <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/ticket_train_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="123456 - "/>
+        <TextView
+            android:id="@+id/ticket_train_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hussain Sagar Exp"/>
+
+      </LinearLayout>
+    </LinearLayout>
+  </android.support.v7.widget.CardView>
+  <android.support.v7.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="10dp"
+      app:cardCornerRadius="5dp">
+    <LinearLayout android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+      <TextView
+          android:id="@+id/ticket_pnr_number"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="PNR - 1234556"
+          android:layout_gravity="center"/>
+      <FrameLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/ticket_src_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12:20"/>
+        <TextView
+            android:id="@+id/ticket_dest_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="22:20"/>
+      </FrameLayout>
+      <FrameLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/ticket_src_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="23-03-2018"/>
+        <TextView
+            android:id="@+id/ticket_dest_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="24-03-2018"/>
+      </FrameLayout>
+      <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/ticket_src_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ADI"/>
+        <TextView
+            android:id="@+id/ticket_src_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text=" - Ahmedabad Jn"/>
+        <TextView
+            android:id="@+id/ticket_des_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hyd"/>
+        <TextView
+            android:id="@+id/ticket_dest_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text=" - Hyderabad Jn"/>
+      </LinearLayout>
+    </LinearLayout>
+  </android.support.v7.widget.CardView>
+  <android.support.v7.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="10dp"
+      app:cardCornerRadius="5dp">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+      <TextView
+          android:id="@+id/ticket_passenger_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Name - Afroz"/>
+      <TextView
+          android:id="@+id/ticket_passenger_pref"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Pref - 3A"/>
+      <TextView
+          android:id="@+id/ticket_status"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Status = RAC - 23"/>
+      <TextView
+          android:id="@+id/ticket_fare"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Fare - 223"/>
+    </LinearLayout>
+  </android.support.v7.widget.CardView>
+
+  <android.support.v7.widget.CardView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_margin="10dp"
+      app:cardCornerRadius="5dp">
+
+    <ImageView
+        android:id="@+id/ticket_qr_code"
+        android:layout_width="240dp"
+        android:layout_height="240dp"/>
+  </android.support.v7.widget.CardView>
+
+
+
+</LinearLayout>

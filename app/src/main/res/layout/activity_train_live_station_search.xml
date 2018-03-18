@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+  <LinearLayout
+      android:orientation="vertical"
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:gravity="center"
+      tools:context="com.example.vivekbhalodiya.railticket.feature.trainlivestatus.TrainLiveStationSearchActivity">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+      <TextView
+          android:text="Train Number"
+          android:textColor="@color/lightPrimaryColor"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"/>
+      <EditText
+          android:id="@+id/train_number_live_station"
+          android:layout_marginTop="20dp"
+          android:textSize="20dp"
+          android:textStyle="bold"
+          android:hint="Train Number"
+          android:inputType="number"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
+      <TextView
+        android:text="Journey Date"
+        android:textColor="@color/lightPrimaryColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"/>
+      <TextView
+        android:id="@+id/live_station_date"
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:hint="DD/MM/YYYY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/get_live_station_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get Live Status"/>
+  </LinearLayout>
+</layout>

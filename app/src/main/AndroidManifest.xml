@@ -15,24 +15,31 @@
     <activity
         android:name=".feature.userlogin.UserLoginActivity"
         android:screenOrientation="portrait">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
-
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
     </activity>
     <activity android:name=".feature.usersignup.UserSignUpActivity">
     </activity>
     <activity android:name=".feature.adminlogin.AdminLoginActivity">
     </activity>
     <activity android:name=".feature.trainsearch.TrainSearchActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
 
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
     </activity>
     <activity android:name=".feature.trainresult.TrainResultActivity">
     </activity>
     <activity android:name=".feature.fareavailabilty.FareActivity">
     </activity>
     <activity android:name=".feature.passsengerdetail.PassengerDetailsActivity">
+    </activity>
+    <activity android:name=".feature.ticketview.TicketViewActivity">
+    </activity>
+    <activity android:name=".feature.mybookings.MyBookings">
+    </activity>
+    <activity android:name=".feature.trainlivestatus.TrainLiveStationSearchActivity">
+    </activity>
+    <activity android:name=".feature.trainlivestatus.TrainLiveStationActivity">
     </activity>
   </application>
 

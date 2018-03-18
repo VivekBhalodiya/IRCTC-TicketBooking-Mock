@@ -19,6 +19,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import retrofit2.Response;
 import timber.log.Timber;
 
@@ -58,9 +59,11 @@ public class FareViewModel extends BaseViewModel<FareView> {
     progressDialog.show();
 
     call
+        .timeout(5, TimeUnit.SECONDS)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
     availCall
+        .timeout(5, TimeUnit.SECONDS)
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread());
 
@@ -90,7 +93,7 @@ public class FareViewModel extends BaseViewModel<FareView> {
   }
 
   void setAdapterData(int fare, List<AvailabilityItem> availability) {
-    Timber.i("Fare Model %s",fare);
+    Timber.i("Fare Model %s",trainsItem);
     availabilityAdapter.setData(availability,trainsItem,pref);
     classessAdapter.setData(fare);
   }

@@ -5,15 +5,21 @@ import com.example.vivekbhalodiya.railticket.api.model.TrainBetween.TrainRespons
 import com.example.vivekbhalodiya.railticket.api.model.TrainBetween.TrainsItem;
 import com.example.vivekbhalodiya.railticket.api.model.TrainFare.ClassesItem;
 import com.example.vivekbhalodiya.railticket.api.model.TrainFare.TrainFareResponse;
+import com.example.vivekbhalodiya.railticket.api.model.TrainSearchResult.StationsItem;
+import com.example.vivekbhalodiya.railticket.api.model.TrainSearchResult.TrainSearchResultResponse;
 import com.example.vivekbhalodiya.railticket.api.services.TrainApi;
 import com.example.vivekbhalodiya.railticket.api.services.TrainApiInterface;
 import com.example.vivekbhalodiya.railticket.constants.AppConstant;
 import com.example.vivekbhalodiya.railticket.feature.base.BaseViewModel;
+import com.lapism.searchview.SearchAdapter;
+import com.lapism.searchview.SearchItem;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -25,9 +31,9 @@ import timber.log.Timber;
  */
 
 public class TrainSearchViewModel extends BaseViewModel<TrainSearchView> {
-  public static String journeyDate = "27-03-2018";
-  public static String sourceCode = "ndls";
-  public static String destCode = "hwh";
+  public static String journeyDate = "15-04-2018";
+  public static String sourceCode = "hyb";
+  public static String destCode = "cstm";
   private static String trainNumber = "";
   public static String preferenceCoach = "3A";
   public static String quota = "GN";
@@ -38,6 +44,10 @@ public class TrainSearchViewModel extends BaseViewModel<TrainSearchView> {
   private Observable<TrainResponse> call = trainApi.getTrainBetweenStations(sourceCode, destCode, journeyDate, AppConstant.API_KEY);
   private Observable<Response<TrainFareResponse>> getClassesAvailCall;
   private ArrayList<TrainFareResponse> listOfTrainsAndClass = new ArrayList<TrainFareResponse>();
+  private Observable<TrainSearchResultResponse> trainSearchCall;
+  List<String> searchResultList = new ArrayList<>();
+  List<SearchItem> searItemsList =  new ArrayList<>();
+  private SearchAdapter searchAdapter;
 
   public String getJourneyDate() {
     return journeyDate;
@@ -120,5 +130,44 @@ public class TrainSearchViewModel extends BaseViewModel<TrainSearchView> {
       finalList.add(tmpList);
     }
     getView().triggerResultActivity(listOfTrains, finalList);
+  }
+
+  void searchStationNames(String query){
+    searchResultList.clear();
+    getView().showProgress(true);
+    trainSearchCall = trainApi.getSearchStationRsult(query,AppConstant.API_KEY);
+    trainSearchCall
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new DisposableObserver<TrainSearchResultResponse>() {
+          @Override public void onNext(TrainSearchResultResponse trainSearchResultResponseResponse) {
+            for (StationsItem item : trainSearchResultResponseResponse.getStations()){
+              Timber.d("Station Name Search %s",item.getName());
+              searchResultList.add(item.getName() + "::" + item.getCode());
+              SearchItem searchItem = new SearchItem();
+              searchItem.set_text(item.getName());
+              searItemsList.add(searchItem);
+
+            }
+            getView().showProgress(false);
+          }
+
+          @Override public void onError(Throwable e) {
+            Timber.e(e);
+          }
+
+          @Override public void onComplete() {
+            Timber.d("SearchList Size %s",searchResultList.size());
+            searchAdapter.setSuggestionsList(searItemsList);
+            if(searchResultList.size() > 10)
+              searchAdapter.notifyItemRangeChanged(0,10);
+            else
+              searchAdapter.notifyDataSetChanged();
+          }
+        });
+  }
+
+  void setSearchAdapter(SearchAdapter searchAdapter) {
+    this.searchAdapter = searchAdapter;
   }
 }
