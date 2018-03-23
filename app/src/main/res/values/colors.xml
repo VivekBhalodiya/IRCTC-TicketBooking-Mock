@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#2196F3</color>
-  <color name="colorPrimaryDark">#1976D2</color>
-  <color name="colorAccent">#FF5722</color>
+  <color name="colorPrimary">#009688</color>
+  <color name="colorPrimaryDark">#004D40</color>
+  <color name="colorAccent">#F44336</color>
   <color name="lightPrimaryColor">#BBDEFB</color>
 
+  <color name="indigo">#512DA8</color>
   <color name="white">#FFF</color>
   <color name="secondary_text">#757575</color>
   <color name="pinkish_red">#ff364f</color>
@@ -13,4 +14,7 @@
   <color name="success_green">#009688</color>
   <color name="light_orange">#FFA500</color>
   <color name="red">#ff0000</color>
+  <color name="status_bar_color">#3a4e5d</color>
+  <color name="lightPrimaryColorTransparent">#E0F2F1</color>
+  <color name="lightGrey">#f2f2f2</color>
 </resources>

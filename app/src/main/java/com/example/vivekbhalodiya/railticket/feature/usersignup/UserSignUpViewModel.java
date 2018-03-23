@@ -77,7 +77,7 @@ public class UserSignUpViewModel extends BaseViewModel<UserSignUpView> {
     }
   }*/
   public void createUser(View view) {
-    getView().createFireBaseUser(getEmail(),getPassword(),getFullName(),getPhoneNumber());
+    getView().createFireBaseUser(getEmail(),getPassword(),getFullName(),getPhoneNumber(),getReenterPass());
   }
 
 }

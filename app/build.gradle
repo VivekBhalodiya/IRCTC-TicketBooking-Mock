@@ -61,8 +61,10 @@ dependencies {
   //SerachView
   compile 'com.lapism:searchview:4.0'
   //Simple Search
-
   implementation 'com.android.support:design:27.0.2'
+  //Progress Dialog
+  compile 'com.kaopiz:kprogresshud:1.1.0'
+
   compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
   implementation files('/Users/vivekbhalodiya/Downloads/JSONKotlinModels/lib/JSONKotlinModels.jar')
   implementation files('/Users/vivekbhalodiya/Downloads/JSONKotlinModels/lib/json-20170516.jar')

@@ -2,6 +2,8 @@ package com.example.vivekbhalodiya.railticket.feature.passsengerdetail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import com.example.vivekbhalodiya.railticket.R;
 import com.example.vivekbhalodiya.railticket.api.model.TrainBetween.TrainsItem;
 import com.example.vivekbhalodiya.railticket.databinding.ActivityPassengerDetailsBinding;
@@ -44,6 +46,7 @@ public class PassengerDetailsActivity extends BaseActivity<ActivityPassengerDeta
 
     Timber.i(passengerJourneyDate + availStatus + pref);
     setPassengerData();
+    setUpSpinner();
 
     binding.confirmBooking.setOnClickListener(v -> {
       setDataFromPassengerDetails();
@@ -52,6 +55,18 @@ public class PassengerDetailsActivity extends BaseActivity<ActivityPassengerDeta
         pushTicketDataToFirebase();
       } else {
         //Show Error
+      }
+    });
+  }
+
+  private void setUpSpinner() {
+    binding.seatPref.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+      @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+      }
+
+      @Override public void onNothingSelected(AdapterView<?> parent) {
+
       }
     });
   }

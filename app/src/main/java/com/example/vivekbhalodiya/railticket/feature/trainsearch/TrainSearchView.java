@@ -10,10 +10,8 @@ import java.util.ArrayList;
  */
 
 public interface TrainSearchView extends MvvmView {
-  void selectDate();
-
-  void showProgress(boolean show);
-
+  void showProgress(String message,boolean show);
   void triggerResultActivity(ArrayList<TrainsItem> listOfTrains,
       ArrayList<ArrayList<ClassesItem>> listOfClasses);
+  void showSneaker(String message);
 }

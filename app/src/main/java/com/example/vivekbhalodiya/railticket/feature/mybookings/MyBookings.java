@@ -43,6 +43,7 @@ public class MyBookings extends BaseActivity<ActivityMyBookingsBinding, MyBookin
   }
 
   private void getSpecificTicketFromFirebase(BookingsCallback bookingsCallback) {
+    showPreogressDialog("Getting your bookings.",true);
     DatabaseReference ref =
         FirebaseDatabase.getInstance().getReference().child("user").child(firebaseManager.getFireBaseUser().getUid()).child("ticket");
 
@@ -52,9 +53,12 @@ public class MyBookings extends BaseActivity<ActivityMyBookingsBinding, MyBookin
           passengerViewModel.add(data.getValue(PassengerViewModel.class));
         }
         bookingsCallback.onDataUpdatedFireabse(passengerViewModel);
+        showPreogressDialog("",false);
       }
 
       @Override public void onCancelled(DatabaseError databaseError) {
+        showPreogressDialog("",false);
+        showSneakerError("Some error occurred. Please try again");
         Timber.e(databaseError.toException());
       }
     });

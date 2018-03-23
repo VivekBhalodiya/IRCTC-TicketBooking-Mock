@@ -1,6 +1,7 @@
 package com.example.vivekbhalodiya.railticket.api.model.TrainLiveStatus
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class RouteItem(@SerializedName("actarr")
                      val actarr: String = "",
@@ -27,4 +28,4 @@ data class RouteItem(@SerializedName("actarr")
                      @SerializedName("day")
                      val day: Int = 0,
                      @SerializedName("scharr_date")
-                     val scharrDate: String = "")
+                     val scharrDate: String = "") : Serializable

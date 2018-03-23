@@ -8,5 +8,5 @@ import com.example.vivekbhalodiya.railticket.feature.base.MvvmView;
 
 public interface UserSignUpView extends MvvmView {
   void showSneaker(String title, String message,boolean error);
-  void createFireBaseUser(String email,String password,String fullName,String phoneNum);
+  void createFireBaseUser(String email, String password, String fullName, String phoneNum, String reenterPass);
 }

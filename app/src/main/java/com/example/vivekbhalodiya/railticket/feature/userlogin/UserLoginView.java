@@ -9,4 +9,7 @@ import com.example.vivekbhalodiya.railticket.feature.base.MvvmView;
 public interface UserLoginView extends MvvmView {
   void showView(String sneakerMessage);
   void triggerActivity(int option);
+  void showProgress(String message,boolean show);
+  void showSneakerSuccessBar(String message);
+  void showToast(String messsage);
 }

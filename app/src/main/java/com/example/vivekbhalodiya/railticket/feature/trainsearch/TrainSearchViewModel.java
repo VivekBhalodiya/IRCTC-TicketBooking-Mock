@@ -17,9 +17,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -31,77 +29,82 @@ import timber.log.Timber;
  */
 
 public class TrainSearchViewModel extends BaseViewModel<TrainSearchView> {
-  public static String journeyDate = "15-04-2018";
-  public static String sourceCode = "hyb";
-  public static String destCode = "cstm";
-  private static String trainNumber = "";
+  public static String journeyDate = "";
+  public static String sourceCode = "";
+  public static String destCode = "";
+  public static String trainNumber = "";
   public static String preferenceCoach = "3A";
   public static String quota = "GN";
   private TrainApiInterface trainApi = new TrainApi().getClient().create(TrainApiInterface.class);
   private ArrayList<TrainsItem> listOfTrains = new ArrayList<>();
   private ArrayList<ArrayList<ClassesItem>> listsOfClassess = new ArrayList<>();
   private AtomicInteger count = new AtomicInteger();
-  private Observable<TrainResponse> call = trainApi.getTrainBetweenStations(sourceCode, destCode, journeyDate, AppConstant.API_KEY);
+  private Observable<Response<TrainResponse>> call = trainApi.getTrainBetweenStations(sourceCode, destCode, journeyDate, AppConstant.API_KEY);
   private Observable<Response<TrainFareResponse>> getClassesAvailCall;
-  private ArrayList<TrainFareResponse> listOfTrainsAndClass = new ArrayList<TrainFareResponse>();
+  private ArrayList<TrainFareResponse> listOfTrainsAndClass = new ArrayList<>();
   private Observable<TrainSearchResultResponse> trainSearchCall;
   List<String> searchResultList = new ArrayList<>();
-  List<SearchItem> searItemsList =  new ArrayList<>();
+  List<SearchItem> searItemsList = new ArrayList<>();
   private SearchAdapter searchAdapter;
-
-  public String getJourneyDate() {
-    return journeyDate;
-  }
-
-  public void OnDatePickerClick(View view) {
-
-  }
-
-  public void setJourneyDate(String journeyDate) {
-  }
-
+  private boolean isTrainsFound = false;
   public void OnClickSearchTrains(View view) {
     count.set(0);
-    getView().showProgress(true);
-    trainApi.getTrainBetweenStations(sourceCode, destCode, journeyDate, AppConstant.API_KEY)
-        .timeout(10, TimeUnit.SECONDS)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .doOnNext(tr -> {
-          listOfTrains = tr.getTrains();
-        })
-        .map(this::getTrainNumbers)
-        .flatMap(Observable::fromIterable)
-        .concatMap(trainNumber -> trainApi.getTrainFareWithAvailability(trainNumber, trainNumber, destCode, preferenceCoach, quota, journeyDate,
-            AppConstant.API_KEY)
-            .timeout(20,TimeUnit.SECONDS)
-            .subscribeOn(Schedulers.io()))
-        .subscribeWith(new DisposableObserver<Response<TrainFareResponse>>() {
+    if (!sourceCode.equals(destCode) && !destCode.equals(sourceCode) && !destCode.isEmpty() && !sourceCode.isEmpty() && !journeyDate.isEmpty()) {
+      getView().showProgress(AppConstant.SEARCH_TRAIN_MSG, true);
+      trainApi.getTrainBetweenStations(sourceCode, destCode, journeyDate, AppConstant.API_KEY)
+          .timeout(10, TimeUnit.SECONDS)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .doOnNext(tr -> {
+            if(tr.body().getResponseCode() == 200 && tr.body().getTotal() == 0){
+              isTrainsFound = false;
+            }
+            else if(tr.body().getResponseCode() != 200){
+              isTrainsFound = false;
+            }
+            else{
+              isTrainsFound = true;
+            }
+            listOfTrains = tr.body().getTrains();
+          })
+          .map(this::getTrainNumbers)
+          .flatMap(Observable::fromIterable)
+          .concatMap(trainNumber -> trainApi.getTrainFareWithAvailability(trainNumber, trainNumber, destCode, preferenceCoach, quota, journeyDate,
+              AppConstant.API_KEY)
+              .timeout(20, TimeUnit.SECONDS)
+              .doOnError(Timber::e)
+              .subscribeOn(Schedulers.io()))
+          .subscribeWith(new DisposableObserver<Response<TrainFareResponse>>() {
 
-          @Override public void onComplete() {
-            getAvailableClasses(listOfTrains);
-          }
+            @Override public void onComplete() {
+              getAvailableClasses(listOfTrains);
+              getView().showProgress("", false);
 
-          @Override public void onNext(Response<TrainFareResponse> trainFareResponseResponse) {
-            listOfTrainsAndClass.add(count.get(), trainFareResponseResponse.body());
-            listsOfClassess.add(count.getAndIncrement(), trainFareResponseResponse.body().getTrain().getClasses());
-            Timber.i("ListSize %s", listsOfClassess.size());
-          }
+            }
 
-          @Override public void onError(Throwable e) {
-            getView().showProgress(false);
-            listOfTrains = new ArrayList<>();
-            Timber.e(e);
-          }
-        });
+            @Override public void onNext(Response<TrainFareResponse> trainFareResponseResponse) {
+              listOfTrainsAndClass.add(count.get(), trainFareResponseResponse.body());
+              listsOfClassess.add(count.getAndIncrement(), trainFareResponseResponse.body().getTrain().getClasses());
+              Timber.i("ListSize %s", listsOfClassess.size());
+            }
+
+            @Override public void onError(Throwable e) {
+              getView().showProgress("", false);
+              listOfTrains = new ArrayList<>();
+              Timber.e(e);
+            }
+          });
+    } else {
+      getView().showSneaker("Invalid Input");
+    }
   }
 
-  private List<String> getTrainNumbers(TrainResponse trainResponse) {
+  private List<String> getTrainNumbers(Response<TrainResponse> trainResponse) {
     ArrayList<String> trainList = new ArrayList<>();
 
-    for (int i = 0; i < trainResponse.getTrains().size(); i++) {
-      trainList.add(i, trainResponse.getTrains().get(i).getNumber());
-      Timber.i("TrainNumbers %s", trainResponse.getTrains().get(i).getNumber());
+    for (int i = 0; i < trainResponse.body().getTrains().size(); i++) {
+      trainList.add(i, trainResponse.body().getTrains().get(i).getNumber());
+      Timber.i("TrainNumbers %s", trainResponse.body().getTrains().get(i).getNumber());
     }
     return trainList;
   }
@@ -129,40 +132,45 @@ public class TrainSearchViewModel extends BaseViewModel<TrainSearchView> {
       }
       finalList.add(tmpList);
     }
-    getView().triggerResultActivity(listOfTrains, finalList);
+    if(isTrainsFound)
+      getView().triggerResultActivity(listOfTrains, finalList);
+    else
+      getView().showSneaker("No trains found. Please try a different day or a route.");
   }
 
-  void searchStationNames(String query){
+  void searchStationNames(String query) {
     searchResultList.clear();
-    getView().showProgress(true);
-    trainSearchCall = trainApi.getSearchStationRsult(query,AppConstant.API_KEY);
+    getView().showProgress(AppConstant.SEARCH_STN_NAMES, true);
+    trainSearchCall = trainApi.getSearchStationRsult(query, AppConstant.API_KEY);
     trainSearchCall
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new DisposableObserver<TrainSearchResultResponse>() {
           @Override public void onNext(TrainSearchResultResponse trainSearchResultResponseResponse) {
-            for (StationsItem item : trainSearchResultResponseResponse.getStations()){
-              Timber.d("Station Name Search %s",item.getName());
-              searchResultList.add(item.getName() + "::" + item.getCode());
+            for (StationsItem item : trainSearchResultResponseResponse.getStations()) {
+              Timber.d("Station Name Search %s", item.getName());
+              searchResultList.add(item.getName());
               SearchItem searchItem = new SearchItem();
-              searchItem.set_text(item.getName());
+              searchItem.set_text(item.getName() + "---" + item.getCode());
               searItemsList.add(searchItem);
-
             }
-            getView().showProgress(false);
+            getView().showProgress("", false);
           }
 
           @Override public void onError(Throwable e) {
+            getView().showProgress("", false);
+            getView().showSneaker("An error occurred. Please try again.");
             Timber.e(e);
           }
 
           @Override public void onComplete() {
-            Timber.d("SearchList Size %s",searchResultList.size());
+            Timber.d("SearchList Size %s", searchResultList.size());
             searchAdapter.setSuggestionsList(searItemsList);
-            if(searchResultList.size() > 10)
-              searchAdapter.notifyItemRangeChanged(0,10);
-            else
+            if (searchResultList.size() > 10) {
+              searchAdapter.notifyItemRangeChanged(0, 10);
+            } else {
               searchAdapter.notifyDataSetChanged();
+            }
           }
         });
   }

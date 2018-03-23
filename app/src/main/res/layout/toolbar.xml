@@ -7,4 +7,14 @@
     android:background="@color/colorPrimary"
     android:elevation="0dp"
     android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-    android:popupTheme="@style/AppTheme"/>
+    android:popupTheme="@style/AppTheme">
+
+  <TextView
+      android:text="Rail Ticket"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:textStyle="bold"
+      android:textColor="@color/lightPrimaryColor"
+      android:textSize="20dp"
+      android:gravity="start|fill_vertical"/>
+</android.support.v7.widget.Toolbar>

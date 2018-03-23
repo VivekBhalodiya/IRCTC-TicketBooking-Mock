@@ -1,6 +1,7 @@
 package com.example.vivekbhalodiya.railticket.api.model.TrainLiveStatus
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class TrainLiveStatusResponse(@SerializedName("response_code")
                                    val responseCode: Int = 0,
@@ -11,4 +12,4 @@ data class TrainLiveStatusResponse(@SerializedName("response_code")
                                    @SerializedName("debit")
                                    val debit: Int = 0,
                                    @SerializedName("train")
-                                   val train: Train)
+                                   val train: Train) : Serializable

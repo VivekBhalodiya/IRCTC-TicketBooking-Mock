@@ -1,6 +1,5 @@
 package com.example.vivekbhalodiya.railticket.feature.trainsearch;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -22,52 +21,58 @@ import com.example.vivekbhalodiya.railticket.feature.trainresult.TrainResultActi
 import com.example.vivekbhalodiya.railticket.feature.userlogin.UserLoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.lapism.searchview.SearchAdapter;
-import com.lapism.searchview.SearchItem;
 import com.lapism.searchview.SearchView;
-import com.pnikosis.materialishprogress.ProgressWheel;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import timber.log.Timber;
 
 public class TrainSearchActivity extends BaseActivity<ActivityTrainSearchBinding, TrainSearchViewModel, TrainSearchView>
     implements TrainSearchView, DatePickerDialog.OnDateSetListener {
-  private ProgressWheel mProgressWheel;
-  private ProgressDialog progressDialog;
-  private SearchView searchView;
-  private TextView sourceStation;
   SearchAdapter searchAdapter;
+  private boolean isDatePickerClicked = false;
+  private boolean isToStationClicked = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    progressDialog = new ProgressDialog(this);
-    progressDialog.setMessage("Loading...");
-    Toolbar toolbar = findViewById(R.id.train_search_toolbar);
-    searchView = findViewById(R.id.searchView);
-    searchView.setVisibility(View.INVISIBLE);
-    sourceStation = findViewById(R.id.from_station);
-    sourceStation.setOnClickListener(v -> {
-      searchView.setVisibility(View.VISIBLE);
-      searchView.open(false);
-    });
-    setupSearchView();
+
+    Toolbar toolbar = findViewById(R.id.search_trains_toolbar);
     setSupportActionBar(toolbar);
+
+    binding.searchView.setVisibility(View.INVISIBLE);
+
+    binding.fromStation.setOnClickListener(v -> {
+      isToStationClicked = false;
+      binding.searchView.setVisibility(View.VISIBLE);
+      binding.searchView.open(false);
+    });
+
+    binding.toStation.setOnClickListener(v -> {
+      isToStationClicked = true;
+      binding.searchView.setVisibility(View.VISIBLE);
+      binding.searchView.open(false);
+    });
+
+    binding.searchTrainDatePicker.setOnClickListener(v -> {
+      selectDate();
+      isDatePickerClicked = true;
+    });
+
+    setupSearchView();
   }
 
   private void setupSearchView() {
-    searchView.setAlpha(1.0f);
-    searchView.setHintColor(ContextCompat.getColor(getApplicationContext(),R.color.colorAccent));
-    searchView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(),R.color.colorPrimary));
+    binding.searchView.setAlpha(1.0f);
+    binding.searchView.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.white));
     searchAdapter = new SearchAdapter(this);
     searchAdapter.setHasStableIds(true);
-    searchView.setAdapter(searchAdapter);
-    searchView.setShouldClearOnClose(true);
-    searchView.setOnOpenCloseListener(new SearchView.OnOpenCloseListener() {
+    binding.searchView.setAdapter(searchAdapter);
+    binding.searchView.setShouldClearOnClose(true);
+    binding.searchView.setOnOpenCloseListener(new SearchView.OnOpenCloseListener() {
       @Override public boolean onClose() {
-        searchView.setVisibility(View.INVISIBLE);
+        binding.searchView.setVisibility(View.INVISIBLE);
         return false;
       }
 
@@ -77,16 +82,25 @@ public class TrainSearchActivity extends BaseActivity<ActivityTrainSearchBinding
     });
     viewModel.setSearchAdapter(searchAdapter);
 
-
     searchAdapter.addOnItemClickListener((view, position) -> {
       TextView textView = view.findViewById(R.id.textView_item_text);
       String query = textView.getText().toString();
-      searchView.setQuery(query, false);
-      searchView.close(false);
-      Timber.d("Item Clicked %s %s", position, query);
+      String[] codeFromStationName;
+      codeFromStationName = query.split("---");
+      //Get Source Station From Search Bar
+      if (!isToStationClicked) {
+        //FromStation Clicked
+        binding.fromStation.setText(codeFromStationName[1]);
+        TrainSearchViewModel.sourceCode = codeFromStationName[1];
+      } else {
+        //TO Station Clicked
+        binding.toStation.setText(codeFromStationName[1]);
+        TrainSearchViewModel.destCode = codeFromStationName[1];
+      }
+      binding.searchView.close(false);
     });
 
-    searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+    binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
       @Override public boolean onQueryTextSubmit(String query) {
         viewModel.searchStationNames(query);
         return false;
@@ -108,52 +122,69 @@ public class TrainSearchActivity extends BaseActivity<ActivityTrainSearchBinding
 
   @Override public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
     String month = "";
+    String monthNumeric = "";
     String journeyDate;
     switch (monthOfYear) {
       case 0:
         month = AppConstant.JAN;
+        monthNumeric = "01";
         break;
       case 1:
         month = AppConstant.FEB;
+        monthNumeric = "02";
         break;
       case 2:
         month = AppConstant.MARCH;
+        monthNumeric = "03";
         break;
       case 3:
         month = AppConstant.APR;
+        monthNumeric = "04";
         break;
       case 4:
         month = AppConstant.MAY;
+        monthNumeric = "05";
         break;
       case 5:
         month = AppConstant.JUN;
+        monthNumeric = "06";
         break;
       case 6:
         month = AppConstant.JUL;
+        monthNumeric = "07";
         break;
       case 7:
         month = AppConstant.AUG;
+        monthNumeric = "08";
         break;
       case 8:
         month = AppConstant.SEP;
+        monthNumeric = "09";
         break;
       case 9:
         month = AppConstant.OCT;
+        monthNumeric = "10";
         break;
       case 10:
         month = AppConstant.NOV;
+        monthNumeric = "11";
         break;
       case 11:
         month = AppConstant.DEC;
+        monthNumeric = "12";
         break;
       default:
         break;
     }
     journeyDate = dayOfMonth + " " + month + " " + year;
-    binding.DatePicker.setText(journeyDate);
+    if (isDatePickerClicked) {
+      TrainSearchViewModel.journeyDate = dayOfMonth+"-"+monthNumeric+"-"+year;
+      binding.searchTrainDatePicker.setText(journeyDate);
+      isDatePickerClicked = false;
+    }
   }
 
-  @Override public void selectDate() {
+  public void selectDate() {
     Calendar now = Calendar.getInstance();
     DatePickerDialog dateDialog = DatePickerDialog.newInstance(this
         , now.get(Calendar.YEAR)
@@ -162,11 +193,11 @@ public class TrainSearchActivity extends BaseActivity<ActivityTrainSearchBinding
     dateDialog.show(getFragmentManager(), "DatePickerDialog");
   }
 
-  @Override public void showProgress(boolean show) {
+  @Override public void showProgress(String message,boolean show) {
     if (show) {
-      progressDialog.show();
+      showPreogressDialog(message, show);
     } else {
-      progressDialog.dismiss();
+      showPreogressDialog(message, show);
     }
   }
 
@@ -178,8 +209,12 @@ public class TrainSearchActivity extends BaseActivity<ActivityTrainSearchBinding
     bundle.putSerializable("classes", (Serializable) listOfClasses);
     Intent intent = new Intent(this, TrainResultActivity.class);
     intent.putExtra("intent", bundle);
-    showProgress(false);
+    showProgress("",false);
     startActivity(intent);
+  }
+
+  @Override public void showSneaker(String message) {
+    showSneakerError(message);
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -195,7 +230,16 @@ public class TrainSearchActivity extends BaseActivity<ActivityTrainSearchBinding
       FirebaseAuth.getInstance().signOut();
       Toast.makeText(this, "Logged Out Successfully", Toast.LENGTH_SHORT).show();
       startActivity(new Intent(this, UserLoginActivity.class));
+      finish();
     }
     return true;
+  }
+
+  @Override public void showSneakerError(String message) {
+    super.showSneakerError(message);
+  }
+
+  @Override public void showPreogressDialog(String message, boolean show) {
+    super.showPreogressDialog(message, show);
   }
 }

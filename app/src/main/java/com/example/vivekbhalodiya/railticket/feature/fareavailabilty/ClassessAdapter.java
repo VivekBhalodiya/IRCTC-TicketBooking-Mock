@@ -22,7 +22,7 @@ public class ClassessAdapter extends RecyclerView.Adapter<ClassessAdapter.ViewHo
   private FareViewModel viewModel;
   private int classFare;
 
-  public ClassessAdapter(ArrayList<ClassesItem> listOfClasses,TrainsItem trainsItem, Context context,
+  public ClassessAdapter(ArrayList<ClassesItem> listOfClasses, TrainsItem trainsItem, Context context,
       AvailabilityAdapter availabilityAdapter) {
     this.listOfClasses = listOfClasses;
     this.trainsItem = trainsItem;
@@ -48,7 +48,6 @@ public class ClassessAdapter extends RecyclerView.Adapter<ClassessAdapter.ViewHo
       viewModel.OnClickTrainResult(trainsItem,
           holder.binding.className.getText().toString(), context,
           availabilityAdapter, this);
-      holder.binding.fare.setText(String.valueOf(classFare));
       notifyDataSetChanged();
     });
   }

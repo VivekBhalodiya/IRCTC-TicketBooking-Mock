@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-  <android.support.v7.widget.RecyclerView
+  <LinearLayout
       xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.example.vivekbhalodiya.railticket.feature.mybookings.MyBookings"
+      android:orientation="vertical"
+      android:layout_height="match_parent"
+      android:layout_width="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="0dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+    <TextView
+        android:text="My Bookings"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif"
+        android:textSize="20dp"
+        android:gravity="start|fill_vertical"/>
+    </android.support.v7.widget.Toolbar>
+  <android.support.v7.widget.RecyclerView
       android:id="@+id/my_bookings_recyclerview"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      tools:context="com.example.vivekbhalodiya.railticket.feature.mybookings.MyBookings">
-
+      android:layout_height="match_parent">
   </android.support.v7.widget.RecyclerView>
+  </LinearLayout>
 </layout>

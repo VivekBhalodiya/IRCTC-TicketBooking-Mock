@@ -6,4 +6,5 @@
   <string name="create_an_account">Create an account.</string>
   <string name="admin_login">Admin Login</string>
   <string name="ticket_checker_text">Ticket Checker</string>
+  <string name="train_live_status">Train Live Status</string>
 </resources>

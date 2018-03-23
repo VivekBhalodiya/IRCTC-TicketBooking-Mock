@@ -8,46 +8,56 @@
     <import type="android.view.View"/>
     <variable name="viewModel" type="com.example.vivekbhalodiya.railticket.feature.trainsearch.TrainSearchViewModel"/>
   </data>
-  <FrameLayout
+  <LinearLayout
+      android:orientation="vertical"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:background="@color/colorPrimary"
       tools:context="com.example.vivekbhalodiya.railticket.feature.trainsearch.TrainSearchActivity">
-    <com.pnikosis.materialishprogress.ProgressWheel
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:visibility="gone"
-        tools:visibility="visible"
-        wheel:matProg_barColor="@color/colorPrimary"
-        wheel:matProg_progressIndeterminate="true"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
       <android.support.v7.widget.Toolbar
-          android:id="@+id/train_search_toolbar"
+          android:id="@+id/search_trains_toolbar"
           android:layout_width="match_parent"
           android:layout_height="?attr/actionBarSize"
-          wheel:titleTextColor="@color/white"
           android:background="@color/colorPrimary"
           android:elevation="0dp"
           android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-          wheel:popupTheme="@style/AppTheme"/>
+          wheel:popupTheme="@style/AppTheme">
+
+        <TextView
+            android:text="Search Trains"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:fontFamily="sans-serif"
+            android:textSize="20dp"
+            android:gravity="start|fill_vertical"/>
+      </android.support.v7.widget.Toolbar>
     </FrameLayout>
     <com.lapism.searchview.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="30dp"
         android:animateLayoutChanges="false"
         app:layout_behavior="@string/search_behavior"/>
+   <LinearLayout
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_margin="10dp"
+       android:background="@color/lightPrimaryColor"
+       android:layout_gravity="center">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
+        android:layout_marginBottom="20dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal">
       <LinearLayout
           android:orientation="vertical"
@@ -57,7 +67,7 @@
         <TextView
             android:id="@+id/from_tag"
             android:text="From"
-            android:textColor="@color/lightPrimaryColor"
+            android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
         <TextView
@@ -66,7 +76,8 @@
             android:textStyle="bold"
             android:textSize="40dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textColor="@color/gradient2"/>
       </LinearLayout>
       <LinearLayout
           android:layout_gravity="center_horizontal|end"
@@ -74,10 +85,9 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/to_tag"
             android:text="To"
             android:layout_gravity="end"
-            android:textColor="@color/lightPrimaryColor"
+            android:textColor="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"/>
         <TextView
@@ -85,28 +95,26 @@
             android:hint="Dest"
             android:textStyle="bold"
             android:textSize="40dp"
+            android:textColor="@color/gradient2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
       </LinearLayout>
     </FrameLayout>
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="220dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
         android:orientation="vertical">
       <TextView
-          android:id="@+id/journey_date_tag"
           android:text="Journey Date"
-          android:textColor="@color/lightPrimaryColor"
+          android:textColor="@color/colorPrimary"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"/>
       <TextView
-          android:id="@+id/DatePicker"
-          android:onClick="@{viewModel::OnDatePickerClick}"
-          android:text="@={viewModel.journeyDate}"
+          android:id="@+id/search_train_date_picker"
+          android:textColor="@color/gradient2"
           android:layout_marginTop="20dp"
           android:textSize="40dp"
           android:textStyle="bold"
@@ -118,12 +126,13 @@
           android:text="Search trains"
           android:textSize="18dp"
           android:onClick="@{viewModel::OnClickSearchTrains}"
-          android:textColor="@color/lightPrimaryColor"
-          android:background="@color/colorPrimary"
+          android:textColor="@color/white"
+          android:background="@color/colorAccent"
           android:layout_marginTop="100dp"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"/>
     </FrameLayout>
+   </LinearLayout>
 
-  </FrameLayout>
+  </LinearLayout>
 </layout>
