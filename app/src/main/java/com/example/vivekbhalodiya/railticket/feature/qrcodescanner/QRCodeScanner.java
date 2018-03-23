@@ -6,40 +6,42 @@ import android.graphics.PointF;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.view.SurfaceView;
 import android.widget.Toast;
 import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.example.vivekbhalodiya.railticket.R;
 import com.example.vivekbhalodiya.railticket.databinding.ActivityQrcodeScannerBinding;
 import com.example.vivekbhalodiya.railticket.feature.base.BaseActivity;
+import github.nisrulz.qreader.QRDataListener;
+import github.nisrulz.qreader.QREader;
 import timber.log.Timber;
 
 public class QRCodeScanner extends BaseActivity<ActivityQrcodeScannerBinding,QRCodeScannerViewModel,QRCodeScannerView>
     implements QRCodeReaderView.OnQRCodeReadListener {
-  QRCodeReaderView qrCodeReaderView;
+  private SurfaceView mySurfaceView;
+  private QREader qrEader;
   final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     
-    qrCodeReaderView = binding.qrdecoderview;
     requestPermission();
+    mySurfaceView = binding.cameraView;
+    qrEader = new QREader.Builder(this, mySurfaceView, new QRDataListener() {
+      @Override public void onDetected(String data) {
+        Log.d("QREader", "Value : " + data);
+      }
+    }).enableAutofocus(true)
+        .build();
   }
 
   private void setUpQrCodeView() {
-    qrCodeReaderView.setOnQRCodeReadListener(this);
 
-    // Use this function to enable/disable decoding
-    qrCodeReaderView.setQRDecodingEnabled(true);
-
-    // Use this function to change the autofocus interval (default is 5 secs)
-    qrCodeReaderView.setAutofocusInterval(2000L);
-
-    // Use this function to set back camera preview
-    qrCodeReaderView.setBackCamera();
   }
 
-  private void requestPermission() {
+  private void requestPermission(){
     if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ) {
       ActivityCompat
           .requestPermissions(QRCodeScanner.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CODE_ASK_PERMISSIONS);
@@ -81,13 +83,13 @@ public class QRCodeScanner extends BaseActivity<ActivityQrcodeScannerBinding,QRC
   @Override
   protected void onResume() {
     super.onResume();
-    qrCodeReaderView.startCamera();
+    qrEader.initAndStart(mySurfaceView);
   }
 
   @Override
   protected void onPause() {
     super.onPause();
-    qrCodeReaderView.stopCamera();
+    qrEader.releaseAndCleanup();
   }
 
 }
