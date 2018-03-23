@@ -113,4 +113,12 @@ public class TrainLiveStationSearchActivity
     intent.putExtras(bundle);
     startActivity(intent);
   }
+
+  @Override public void showError(String message) {
+    showSneakerError(message);
+  }
+
+  @Override public void showSneakerError(String message) {
+    super.showSneakerError(message);
+  }
 }

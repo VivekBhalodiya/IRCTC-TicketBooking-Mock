@@ -140,7 +140,7 @@
           android:layout_gravity="center_vertical|start"/>
 
       <Button
-          android:id="@+id/ticket_checker_textview"
+          android:id="@+id/ticket_checker_button"
           android:layout_width="140dp"
           android:layout_height="wrap_content"
           style="@style/Widget.AppCompat.Button.Borderless"

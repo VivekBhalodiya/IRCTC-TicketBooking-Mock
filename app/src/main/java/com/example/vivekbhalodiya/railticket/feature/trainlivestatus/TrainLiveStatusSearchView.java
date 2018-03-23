@@ -9,4 +9,6 @@ import com.example.vivekbhalodiya.railticket.feature.base.MvvmView;
 
 public interface TrainLiveStatusSearchView extends MvvmView {
   void triggerNextActivity(TrainLiveStatusResponse trainLiveStatusResponse);
+  void showError(String message);
+
 }

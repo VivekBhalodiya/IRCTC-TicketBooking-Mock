@@ -26,7 +26,10 @@ class TrainLiveStatusViewModel extends BaseViewModel<TrainLiveStatusSearchView> 
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new DisposableObserver<TrainLiveStatusResponse>() {
           @Override public void onNext(TrainLiveStatusResponse trainLiveStatusResponse) {
-            getView().triggerNextActivity(trainLiveStatusResponse);
+            if(trainLiveStatusResponse.getResponseCode() == 200)
+              getView().triggerNextActivity(trainLiveStatusResponse);
+            else
+              getView().showError("Train doesn't run on selected date.");
           }
 
           @Override public void onError(Throwable e) {

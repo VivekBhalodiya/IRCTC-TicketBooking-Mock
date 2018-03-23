@@ -1,5 +1,6 @@
 package com.example.vivekbhalodiya.railticket.feature.passsengerdetail;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +27,7 @@ public class PassengerDetailsActivity extends BaseActivity<ActivityPassengerDeta
   FirebaseManager firebaseManager;
   PassengerViewModel passengerViewModel;
   DatabaseReference ref;
+  ProgressDialog progressDialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,7 @@ public class PassengerDetailsActivity extends BaseActivity<ActivityPassengerDeta
   }
 
   public void pushTicketDataToFirebase() {
+    showPreogressDialog("Processing payment..",true);
     final String pnr = "pnr-" + (new Random().nextInt(9999999) + 1000000);
     passengerViewModel.setPnr(String.valueOf(pnr));
     ref.push()
@@ -87,11 +90,17 @@ public class PassengerDetailsActivity extends BaseActivity<ActivityPassengerDeta
         .addOnCompleteListener(this, task -> {
           if (task.isComplete()) {
             Timber.i("Success Adding Ticket");
+            Bundle bundle= new Bundle();
+            bundle.putSerializable("ticket",passengerViewModel);
             Intent intent = new Intent(this, TicketViewActivity.class);
+            intent.putExtras(bundle);
             intent.putExtra("pnr", pnr);
             startActivity(intent);
+            showPreogressDialog("",false);
           } else {
             Timber.e(task.getException());
+            showSneakerError("An error occurred.Please try again.");
+            showPreogressDialog("",false);
           }
         });
   }
@@ -118,5 +127,13 @@ public class PassengerDetailsActivity extends BaseActivity<ActivityPassengerDeta
     passengerViewModel.setPassengerEmail(binding.passengerEmail.getText().toString());
     passengerViewModel.setPassengerMobile(binding.passengerMobile.getText().toString());
     passengerViewModel.setPassengerName(binding.passengerName.getText().toString());
+  }
+
+  @Override public void showPreogressDialog(String message, boolean show) {
+    super.showPreogressDialog(message, show);
+  }
+
+  @Override public void showSneakerError(String message) {
+    super.showSneakerError(message);
   }
 }

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -54,6 +55,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:layout_gravity="start"
             android:text="Ahmedabad Jn - "/>
         <TextView
             android:id="@+id/ticket_to_stn_name"
@@ -100,6 +102,7 @@
           android:textColor="@color/colorPrimary"
           android:text="PNR - 1234556"
           android:padding="5dp"
+          android:textAllCaps="true"
           android:textStyle="bold"
           android:layout_gravity="center"/>
       <FrameLayout
@@ -131,11 +134,11 @@
             android:layout_height="wrap_content"
             android:text="23-03-2018"/>
         <TextView
-            android:id="@+id/ticket_dest_date"
+            android:id="@+id/ticket_travel_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:text="24-03-2018"/>
+            android:text="Travel Time : "/>
       </FrameLayout>
       <FrameLayout
           android:orientation="horizontal"
@@ -242,7 +245,7 @@
             android:padding="5dp"
             android:gravity="end"
             android:textColor="@color/colorPrimary"
-            android:text="RAC 35"/>
+            android:text="L 35"/>
       </FrameLayout>
       <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content">
         <TextView
@@ -282,3 +285,4 @@
 
 
 </FrameLayout>
+</layout>

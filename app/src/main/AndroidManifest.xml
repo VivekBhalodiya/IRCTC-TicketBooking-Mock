@@ -3,6 +3,8 @@
     package="com.example.vivekbhalodiya.railticket">
 
   <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.CAMERA"/>
+
 
   <application
       android:name=".BaseApplication"
@@ -24,10 +26,8 @@
     <activity android:name=".feature.usersignup.UserSignUpActivity">
     </activity>
     <activity android:name=".feature.adminlogin.AdminLoginActivity">
-
     </activity>
     <activity android:name=".feature.trainsearch.TrainSearchActivity">
-
     </activity>
     <activity android:name=".feature.trainresult.TrainResultActivity">
     </activity>
@@ -43,7 +43,8 @@
     </activity>
     <activity android:name=".feature.trainlivestatus.TrainLiveStationActivity">
     </activity>
-
+    <activity android:name=".feature.qrcodescanner.QRCodeScanner">
+    </activity>
   </application>
 
 </manifest>

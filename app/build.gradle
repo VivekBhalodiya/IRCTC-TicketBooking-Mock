@@ -64,6 +64,8 @@ dependencies {
   implementation 'com.android.support:design:27.0.2'
   //Progress Dialog
   compile 'com.kaopiz:kprogresshud:1.1.0'
+  //Qr Code Reader
+  implementation 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3'
 
   compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
   implementation files('/Users/vivekbhalodiya/Downloads/JSONKotlinModels/lib/JSONKotlinModels.jar')

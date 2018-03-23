@@ -1,12 +1,13 @@
 package com.example.vivekbhalodiya.railticket.feature.passsengerdetail;
 
 import com.example.vivekbhalodiya.railticket.feature.base.BaseViewModel;
+import java.io.Serializable;
 
 /**
  * Created by vivekbhalodiya on 3/3/18.
  */
 
-public class PassengerViewModel extends BaseViewModel<PassengerView> {
+public class PassengerViewModel extends BaseViewModel<PassengerView> implements Serializable{
   String SUCCESS = "success";
 
   private String passengerName = "";
