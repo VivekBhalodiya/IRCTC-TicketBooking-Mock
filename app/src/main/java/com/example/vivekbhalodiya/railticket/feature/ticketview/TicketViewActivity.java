@@ -24,8 +24,7 @@ public class TicketViewActivity extends BaseActivity<ActivityTicketViewBinding,B
 
   PassengerViewModel passengerViewModel;
   PassengerViewModel ticketData = new PassengerViewModel();
-  ProgressDialog progressDialog;
-  FirebaseManager firebaseManager = new FirebaseManager();
+
   private ImageView qrCodeImageView;
   private QRCodeManager qrCodeManager = new QRCodeManager();
 
@@ -68,26 +67,5 @@ public class TicketViewActivity extends BaseActivity<ActivityTicketViewBinding,B
     viewModel = new BaseViewModel<>();
   }
 
-  private void getSpecificTicketFromFirebase(String pnr) {
-    Timber.d("Inside Pull Data %s ",firebaseManager.getFireBaseUser().getUid()) ;
-    FirebaseDatabase.getInstance().getReference().addListenerForSingleValueEvent(new ValueEventListener() {
-      @Override public void onDataChange(DataSnapshot dataSnapshot) {
-        for (DataSnapshot data : dataSnapshot.getChildren()) {
-          passengerViewModel = data.child("user")
-              .child(firebaseManager.getFireBaseUser().getUid())
-              .child("ticket")
-              .child(pnr)
-              .getValue(PassengerViewModel.class);
-        }
-        progressDialog.dismiss();
-        Timber.d("Passenger Name %s",passengerViewModel.getPassengerName());
-      }
 
-      @Override public void onCancelled(DatabaseError databaseError) {
-        Timber.e(databaseError.getDetails());
-        Timber.e(databaseError.getMessage());
-        Timber.e(databaseError.toException());
-      }
-    });
-  }
 }

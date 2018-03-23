@@ -116,7 +116,7 @@
           android:id="@+id/search_train_date_picker"
           android:textColor="@color/gradient2"
           android:layout_marginTop="20dp"
-          android:textSize="40dp"
+          android:textSize="30sp"
           android:textStyle="bold"
           android:hint="DD/MM/YYYY"
           android:layout_width="wrap_content"
@@ -128,7 +128,7 @@
           android:onClick="@{viewModel::OnClickSearchTrains}"
           android:textColor="@color/white"
           android:background="@color/colorAccent"
-          android:layout_marginTop="100dp"
+          android:layout_marginTop="80dp"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"/>
     </FrameLayout>
