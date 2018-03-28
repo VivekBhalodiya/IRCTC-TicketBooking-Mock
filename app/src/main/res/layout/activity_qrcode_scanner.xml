@@ -9,6 +9,13 @@
     android:layout_height="match_parent"
     tools:context="com.example.vivekbhalodiya.railticket.feature.qrcodescanner.QRCodeScanner">
 
+  <TextView
+      android:id="@+id/qrcode_result"
+      android:gravity="center"
+      android:layout_gravity="center"
+      android:layout_width="match_parent"
+      android:layout_height="30dp" />
+
   <SurfaceView
       android:id="@+id/camera_view"
       android:layout_width="match_parent"

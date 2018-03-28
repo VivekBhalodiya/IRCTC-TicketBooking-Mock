@@ -20,7 +20,7 @@ public class AppConstant {
   public final static String DEC="December";
 
   public final static String BASE_URL="https://api.railwayapi.com/";
-  public final static String API_KEY="c6cnmwv8s6";
+  public final static String API_KEY="v2bsxasz9p";
 
   public final static String SEARCH_TRAIN_MSG = "Searching Trains";
   public final static String SEARCH_STN_NAMES = "Getting Stations names";

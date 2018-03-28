@@ -36,12 +36,13 @@ public class TicketViewActivity extends BaseActivity<ActivityTicketViewBinding,B
     setTicketData();
     Toast.makeText(getApplicationContext(),"Have a safe journey.",Toast.LENGTH_SHORT).show();
     qrCodeImageView = findViewById(R.id.ticket_qr_code);
+    String pnr = getIntent().getStringExtra("pnr");
+    qrCodeImageView.setImageBitmap(qrCodeManager.generateQRCode(pnr));
 
    // getSpecificTicketFromFirebase(pnr);
   }
 
   private void setTicketData() {
-    qrCodeImageView.setImageBitmap(qrCodeManager.generateQRCode(ticketData.getPnr()));
     binding.ticketDesCode.setText(ticketData.getToStationCode()+" - ");
     binding.ticketDestName.setText(ticketData.getToStationName());
     binding.ticketDestTime.setText("Arrival - "+ticketData.getDestArrivalTime());

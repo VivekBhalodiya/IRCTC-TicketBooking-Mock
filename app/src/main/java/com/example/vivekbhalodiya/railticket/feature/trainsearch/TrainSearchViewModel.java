@@ -77,8 +77,8 @@ public class TrainSearchViewModel extends BaseViewModel<TrainSearchView> {
           .subscribeWith(new DisposableObserver<Response<TrainFareResponse>>() {
 
             @Override public void onComplete() {
+              //getView().showProgress("", false);
               getAvailableClasses(listOfTrains);
-              getView().showProgress("", false);
 
             }
 
@@ -154,7 +154,6 @@ public class TrainSearchViewModel extends BaseViewModel<TrainSearchView> {
               searchItem.set_text(item.getName() + "---" + item.getCode());
               searItemsList.add(searchItem);
             }
-            getView().showProgress("", false);
           }
 
           @Override public void onError(Throwable e) {
@@ -165,6 +164,7 @@ public class TrainSearchViewModel extends BaseViewModel<TrainSearchView> {
 
           @Override public void onComplete() {
             Timber.d("SearchList Size %s", searchResultList.size());
+           getView().showProgress("", false);
             searchAdapter.setSuggestionsList(searItemsList);
             if (searchResultList.size() > 10) {
               searchAdapter.notifyItemRangeChanged(0, 10);

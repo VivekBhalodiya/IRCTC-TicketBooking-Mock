@@ -32,6 +32,12 @@ public class QRCodeScanner extends BaseActivity<ActivityQrcodeScannerBinding,QRC
     qrEader = new QREader.Builder(this, mySurfaceView, new QRDataListener() {
       @Override public void onDetected(String data) {
         Log.d("QREader", "Value : " + data);
+        binding.qrcodeResult.post(new Runnable() {
+          @Override
+          public void run() {
+            binding.qrcodeResult.setText(data);
+          }
+        });
       }
     }).enableAutofocus(true)
         .build();
