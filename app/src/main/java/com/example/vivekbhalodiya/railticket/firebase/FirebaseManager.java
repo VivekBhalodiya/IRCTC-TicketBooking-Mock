@@ -28,14 +28,11 @@ public class FirebaseManager {
 
   public void createFirebaseUser(String email, String password) {
     mAuth.createUserWithEmailAndPassword(email, password)
-        .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
-          @Override
-          public void onComplete(@NonNull Task<AuthResult> task) {
-            if (task.isSuccessful()) {
-              Log.d(TAG, "Authentication successful");
-            } else {
-              Log.d(TAG,"Failed");
-            }
+        .addOnCompleteListener((Executor) this, task -> {
+          if (task.isSuccessful()) {
+            Log.d(TAG, "Authentication successful");
+          } else {
+            Log.d(TAG,"Failed");
           }
         });
   }

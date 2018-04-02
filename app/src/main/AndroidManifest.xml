@@ -5,7 +5,6 @@
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.CAMERA"/>
 
-
   <application
       android:name=".BaseApplication"
       android:allowBackup="true"
@@ -44,6 +43,8 @@
     <activity android:name=".feature.trainlivestatus.TrainLiveStationActivity">
     </activity>
     <activity android:name=".feature.qrcodescanner.QRCodeScanner">
+    </activity>
+    <activity android:name=".feature.ticketview.TicketNotFoundActivity">
     </activity>
   </application>
 

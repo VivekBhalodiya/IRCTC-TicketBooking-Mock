@@ -1,6 +1,7 @@
 package com.example.vivekbhalodiya.railticket.feature.qrcodescanner;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.PointF;
 import android.os.Bundle;
@@ -13,15 +14,19 @@ import com.dlazaro66.qrcodereaderview.QRCodeReaderView;
 import com.example.vivekbhalodiya.railticket.R;
 import com.example.vivekbhalodiya.railticket.databinding.ActivityQrcodeScannerBinding;
 import com.example.vivekbhalodiya.railticket.feature.base.BaseActivity;
+import com.example.vivekbhalodiya.railticket.feature.passsengerdetail.PassengerViewModel;
+import com.example.vivekbhalodiya.railticket.feature.ticketview.TicketNotFoundActivity;
+import com.example.vivekbhalodiya.railticket.feature.ticketview.TicketViewActivity;
 import github.nisrulz.qreader.QRDataListener;
 import github.nisrulz.qreader.QREader;
 import timber.log.Timber;
 
 public class QRCodeScanner extends BaseActivity<ActivityQrcodeScannerBinding,QRCodeScannerViewModel,QRCodeScannerView>
-    implements QRCodeReaderView.OnQRCodeReadListener {
+    implements QRCodeReaderView.OnQRCodeReadListener,QRCodeScannerView {
   private SurfaceView mySurfaceView;
   private QREader qrEader;
   final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+  private boolean isQRCodeDecoded = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +36,12 @@ public class QRCodeScanner extends BaseActivity<ActivityQrcodeScannerBinding,QRC
     mySurfaceView = binding.cameraView;
     qrEader = new QREader.Builder(this, mySurfaceView, new QRDataListener() {
       @Override public void onDetected(String data) {
-        Log.d("QREader", "Value : " + data);
-        binding.qrcodeResult.post(new Runnable() {
-          @Override
-          public void run() {
-            binding.qrcodeResult.setText(data);
-          }
-        });
+        if(!isQRCodeDecoded)
+        if(data.contains("pnr-")) {
+          Timber.d("Detected");
+          viewModel.scanTicketDataInFirebase(data);
+          isQRCodeDecoded = true;
+        }
       }
     }).enableAutofocus(true)
         .build();
@@ -98,4 +102,18 @@ public class QRCodeScanner extends BaseActivity<ActivityQrcodeScannerBinding,QRC
     qrEader.releaseAndCleanup();
   }
 
+  @Override public void triggerTicketViewActivity(PassengerViewModel model) {
+    Intent intent = new Intent(this, TicketViewActivity.class);
+    Bundle bundle = new Bundle();
+    bundle.putSerializable("ticket",model);
+    intent.putExtras(bundle);
+    intent.putExtra("noqrcode",false);
+    startActivity(intent);
+    finish();
+  }
+
+  @Override public void triggerActivity() {
+    startActivity(new Intent(this, TicketNotFoundActivity.class));
+    finish();
+  }
 }

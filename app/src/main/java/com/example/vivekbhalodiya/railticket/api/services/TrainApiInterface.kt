@@ -10,9 +10,6 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-/**
- * Created by vivekbhalodiya on 2/15/18.
- */
 interface TrainApiInterface {
   @GET("/v2/between/source/{source}/dest/{dest}/date/{date}/apikey/{apikey}")
   fun getTrainBetweenStations(@Path("source") source: String, @Path("dest") dest: String, @Path("date") date: String, @Path(
