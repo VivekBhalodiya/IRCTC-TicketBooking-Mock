@@ -7,4 +7,4 @@ It is built on the top of MVVM architecture and uses following popular libraries
 2. Retrofit - https://square.github.io/retrofit/
 3. Firebase Realtime Databse / Auth - https://firebase.google.com
 
-Remember this is a sample app NOT a library.
+Remember this is a sample app, NOT a library.
